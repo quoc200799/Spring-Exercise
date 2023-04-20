@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useGetCourseByIdQuery, getAllUsers, getAllCategories } from '../course/courseService';
 import Select from 'react-select';
+import { Controller } from 'react-hook-form';
 
 
 function CourseEdit() {
@@ -85,18 +86,20 @@ function CourseEdit() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="course-supporter" className="form-label fw-bold">Tư vấn viên</label>
-                                <Select
-                                    // className="form-control"
-                                    options={users}
-                                    onChange={handleSelectUsers}
+                                <Controller
+                                    name="userId"
+                                    control={control}
+                                    defaultValue={data?.value}
+                                    render={({field}) =>
+                                        <Select
+                                            {...field}
+                                            placeholder="-- Chọn nhân viên tư vấn --"
+                                            options={optionUsers}                            
+                                            value={optionUsers.find(c => c?.value === field?.value)}
+                                            onChange={(val) => field.onChange(val.value)}                                   
+                                        />
+                                    }
                                 />
-
-                                {/* <select className="form-control" id="course-supporter">
-                                    <option hidden>- Chọn tư vấn viên</option>
-                                    <option value="1">Nguyễn Văn A</option>
-                                    <option value="2">Trần Văn B</option>
-                                    <option value="3">Ngô Thị C</option>
-                                </select> */}
                             </div>
 
                             <div className="mb-3">

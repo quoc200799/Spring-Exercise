@@ -15,7 +15,8 @@ function CourseCreate() {
     const [categories, setCategories] = useState([]);
 
     const [user, setUser] = useState({})
-
+    // const { control, register, handleSubmit, errors, onCreateCourse } =
+    // useCreate();
     useEffect(() => {
         getAllUser();
         getAllCategory();
@@ -30,6 +31,9 @@ function CourseCreate() {
             .then((res) => setCategories(res.data))
             .catch(e => console.log(e))
     };
+
+    // const optionUsers = user
+
     // console.log(register);
     const schema = yup.object({
         name: yup.string().required("Tên khóa học không được để trống"),
@@ -51,8 +55,11 @@ function CourseCreate() {
     const handleSelectUsers = (selectedOption) => {
         setUser(selectedOption)
     }
-    const options = users?.forEach(function (user) {
-        return user;
+    const optionUsers = users?.map(function (user) {
+        return {
+            value: user?.id,
+            label: user?.name
+        };
     })
     return (
         <div className="course-list mt-4 mb-4">
@@ -111,27 +118,26 @@ function CourseCreate() {
                             <div className="mb-3">
                                 <label htmlFor="course-supporter" className="form-label fw-bold">Tư vấn viên</label>
                                 <Controller
-                                    name="select"
+                                    name="userId"
                                     control={control}
-                                    render={(field) =>
+                                    defaultValue={optionUsers[0]?.value}
+                                    render={({field}) =>
                                         <Select
                                             {...field}
-                                            options={users}
-                                            onChange={val => onChange(val.map(c => c?.name))}
-                                            onBlur={field?.onBlur}
-                                            value={users.find(c => c?.name === name)}
-                                        // {...register("user")}
-
+                                            placeholder="-- Chọn nhân viên tư vấn --"
+                                            options={optionUsers}                            
+                                            value={optionUsers.find(c => c?.value === field?.value)}
+                                            onChange={(val) => field.onChange(val.value)}                                   
                                         />
                                     }
                                 />
-                                <select className="form-control" id="course-supporter" {...register("user")}>
+                                {/* <select className="form-control" id="course-supporter" {...register("user")}>
                                     <option value="" hidden>- Chọn người tư vấn</option>
                                     {users?.map((item) =>
                                         <option value={JSON.stringify(item)}>{item?.name}</option>
                                     )}
                                 </select>
-                                <p className="text-danger">{errors.user?.message}</p>
+                                <p className="text-danger">{errors.user?.message}</p> */}
                             </div>
                         </div>
                     </div>
