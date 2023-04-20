@@ -30,7 +30,7 @@ public class CommentController {
     }
     @Secured({"ROLE_ADMIN"})
     @PutMapping("{id}")
-    public ResponseEntity<?> UpdateComment(@PathVariable Integer id,@PathVariable UpdateCommentRequest request) {
+    public ResponseEntity<?> UpdateComment(@PathVariable Integer id,@RequestBody UpdateCommentRequest request) {
         String blog = commentService.updateCommentById(id,request);
         return new ResponseEntity<>(blog, new HttpHeaders(), HttpStatus.OK);
     }

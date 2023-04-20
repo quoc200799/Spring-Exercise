@@ -52,7 +52,7 @@ public class CategoryController {
     @Secured({"ROLE_ADMIN"})
     @PostMapping("categories")
     public ResponseEntity<?> createNewCategory(
-           @PathVariable UpsertCategoryRequest request
+           @RequestBody UpsertCategoryRequest request
     ) {
         String list = categoryService.createNewCategory(request);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
@@ -61,7 +61,7 @@ public class CategoryController {
     @PutMapping("categories/{id}")
     public ResponseEntity<?> updateCategory(
             @PathVariable Integer id,
-            @PathVariable UpsertCategoryRequest request
+            @RequestBody UpsertCategoryRequest request
     ) {
         String list = categoryService.updateCategory(id,request);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);

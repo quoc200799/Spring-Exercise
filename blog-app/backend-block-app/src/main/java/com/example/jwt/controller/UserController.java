@@ -29,13 +29,13 @@ public class UserController {
     }
     @Secured({"ROLE_ADMIN"})
     @PutMapping("{id}")
-    public ResponseEntity<?> UpdateUser(@PathVariable Integer id,@PathVariable UpsertUserRequest request) {
+    public ResponseEntity<?> UpdateUser(@PathVariable Integer id,@RequestBody UpsertUserRequest request) {
         String blog = userService.updateUserById(id,request);
         return new ResponseEntity<>(blog, new HttpHeaders(), HttpStatus.OK);
     }
     @Secured({"ROLE_ADMIN"})
     @PostMapping("")
-    public ResponseEntity<?> createNewUser(@PathVariable UpsertUserRequest request) {
+    public ResponseEntity<?> createNewUser(@RequestBody UpsertUserRequest request) {
         String blog = userService.createNewUser(request);
         return new ResponseEntity<>(blog, new HttpHeaders(), HttpStatus.OK);
     }

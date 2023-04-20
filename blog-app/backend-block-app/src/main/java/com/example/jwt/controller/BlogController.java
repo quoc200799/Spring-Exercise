@@ -65,13 +65,13 @@ public class BlogController {
     }
     @Secured({"ROLE_ADMIN"})
     @PutMapping("blog/{id}")
-    public ResponseEntity<?> UpdateBlog(@PathVariable Integer id,@PathVariable UpsertBlogRequest request) {
+    public ResponseEntity<?> UpdateBlog(@PathVariable Integer id,@RequestBody UpsertBlogRequest request) {
         String blog = blogService.updateBlogById(id,request);
         return new ResponseEntity<>(blog, new HttpHeaders(), HttpStatus.OK);
     }
     @Secured({"ROLE_ADMIN"})
     @PostMapping("blog")
-    public ResponseEntity<?> createNewBlog(@PathVariable UpsertBlogRequest request) {
+    public ResponseEntity<?> createNewBlog(@RequestBody UpsertBlogRequest request) {
         String blog = blogService.createNewBlog(request);
         return new ResponseEntity<>(blog, new HttpHeaders(), HttpStatus.OK);
     }
